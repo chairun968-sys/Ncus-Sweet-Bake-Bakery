@@ -1,0 +1,1496 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ncus Sweet Bake Bakery 🍰✨</title>
+    
+    <!-- Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&family=Pacifico&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Tailwind Config for Custom Colors -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        pink: {
+                            50: '#fff0f5',
+                            100: '#ffe6f0',
+                            200: '#ffcce0',
+                            300: '#ff99bb',
+                            400: '#ff80ab',
+                            500: '#ff4d88',
+                            600: '#e63973',
+                            700: '#cc295c',
+                        },
+                        brown: {
+                            800: '#5a3d46',
+                        }
+                    },
+                    fontFamily: {
+                        'sans': ['Quicksand', 'sans-serif'],
+                        'cute': ['Pacifico', 'cursive'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background: linear-gradient(135deg, #fff0f5 0%, #ffcce0 100%);
+            color: #5a3d46;
+            overflow-x: hidden;
+            position: relative;
+            min-height: 100vh;
+        }
+
+        /* Floating Animations */
+        .floating-item {
+            position: fixed;
+            animation: float 5s ease-in-out infinite;
+            z-index: -1;
+            font-size: 2.5rem;
+            opacity: 0.5;
+            pointer-events: none;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-25px) rotate(15deg); }
+            100% { transform: translateY(0px) rotate(0deg); }
+        }
+
+        /* Custom Form Elements */
+        .cute-input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 2px solid #ffb3c6;
+            border-radius: 1rem;
+            background-color: rgba(255, 255, 255, 0.9);
+            transition: all 0.3s ease;
+            box-shadow: inset 0 2px 4px rgba(255, 182, 193, 0.1);
+        }
+        
+        .cute-input:focus {
+            outline: none;
+            border-color: #ff4d88;
+            background-color: #ffffff;
+            box-shadow: 0 0 0 4px rgba(255, 77, 136, 0.15), inset 0 2px 4px rgba(255, 182, 193, 0.05);
+        }
+
+        .cute-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 1.5rem;
+            box-shadow: 0 12px 35px rgba(255, 153, 187, 0.25);
+            border: 2px solid rgba(255, 255, 255, 0.6);
+            position: relative;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .cute-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 40px rgba(255, 153, 187, 0.35);
+        }
+
+        .cute-card::before {
+            content: '';
+            position: absolute;
+            top: -2px; left: -2px; right: -2px; bottom: -2px;
+            border: 2px dashed #ff99bb;
+            border-radius: 1.6rem;
+            pointer-events: none;
+            opacity: 0.5;
+        }
+
+        /* Hide scrollbar for cleaner look */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #fff0f5; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #ff99bb; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #ff4d88; 
+        }
+    </style>
+</head>
+<body class="font-sans antialiased text-brown-800">
+
+    <!-- Floating Background Elements -->
+    <div class="floating-item" style="top: 10%; left: 5%; animation-delay: 0s;">🧁</div>
+    <div class="floating-item" style="top: 30%; right: 10%; animation-delay: 1.2s;">✨</div>
+    <div class="floating-item" style="top: 50%; left: 8%; animation-delay: 2.5s;">🍰</div>
+    <div class="floating-item" style="top: 70%; right: 5%; animation-delay: 0.8s;">🍓</div>
+    <div class="floating-item" style="top: 85%; left: 15%; animation-delay: 1.5s;">🎂</div>
+    <div class="floating-item" style="top: 20%; left: 80%; animation-delay: 0.5s;">🎀</div>
+
+    <!-- Navigation Bar -->
+    <nav class="p-4 bg-white/70 backdrop-blur-lg shadow-sm sticky top-0 z-50 border-b border-white/50">
+        <div class="max-w-4xl mx-auto flex justify-between items-center">
+            <div class="flex items-center gap-3 cursor-pointer group" onclick="switchView('order-view')">
+                <!-- DYNAMIC LOGO CONTAINER -->
+                <div id="logo-container-nav" class="flex items-center">
+                    <svg width="45" height="45" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" class="drop-shadow-md transform group-hover:scale-110 transition duration-300">
+                        <path d="M 10 85 Q 50 100 90 85 Q 95 85 95 90 Q 50 105 5 90 Q 5 85 10 85 Z" fill="#ff99bb"/>
+                        <ellipse cx="50" cy="85" rx="40" ry="8" fill="#ffcce0"/>
+                        <path d="M 20 85 L 20 45 C 20 40 80 40 80 45 L 80 85 Z" fill="#fff0f5" stroke="#ff4d88" stroke-width="4"/>
+                        <path d="M 18 45 C 18 35 82 35 82 45 C 82 50 75 55 68 45 C 68 55 58 55 50 45 C 42 55 32 55 32 45 C 25 55 18 50 18 45 Z" fill="#ff99bb" stroke="#ff4d88" stroke-width="4" stroke-linejoin="round"/>
+                        <rect x="28" y="22" width="8" height="23" fill="#fffafc" stroke="#ff4d88" stroke-width="2" rx="1"/>
+                        <path d="M 32 8 C 29 13 29 17 32 20 C 35 17 35 13 32 8 Z" fill="#ffb703" stroke="#fb8500" stroke-width="2"/>
+                        <rect x="46" y="15" width="8" height="30" fill="#fffafc" stroke="#ff4d88" stroke-width="2" rx="1"/>
+                        <path d="M 50 1 C 47 6 47 10 50 13 C 53 10 53 6 50 1 Z" fill="#ffb703" stroke="#fb8500" stroke-width="2"/>
+                        <rect x="64" y="22" width="8" height="23" fill="#fffafc" stroke="#ff4d88" stroke-width="2" rx="1"/>
+                        <path d="M 68 8 C 65 13 65 17 68 20 C 71 17 71 13 68 8 Z" fill="#ffb703" stroke="#fb8500" stroke-width="2"/>
+                        <circle cx="35" cy="65" r="4" fill="#5a3d46"/>
+                        <circle cx="65" cy="65" r="4" fill="#5a3d46"/>
+                        <path d="M 45 70 Q 50 75 55 70" fill="none" stroke="#5a3d46" stroke-width="3" stroke-linecap="round"/>
+                        <ellipse cx="25" cy="68" rx="5" ry="3" fill="#ff4d88" opacity="0.4"/>
+                        <ellipse cx="75" cy="68" rx="5" ry="3" fill="#ff4d88" opacity="0.4"/>
+                    </svg>
+                </div>
+                <div class="flex flex-col">
+                    <span class="font-cute text-pink-600 text-xl md:text-2xl tracking-wide drop-shadow-sm leading-tight">Ncus Sweet Bake</span>
+                    <span class="text-xs font-bold text-pink-400 mt-1"><i class="fa-solid fa-location-dot text-pink-500 mr-1"></i> Kranggan, Temanggung, Jawa Tengah</span>
+                </div>
+            </div>
+            <div class="flex gap-4">
+                <button onclick="switchView('order-view')" class="nav-btn text-pink-600 font-bold hover:text-pink-800 transition px-2 py-1 border-b-2 border-transparent hover:border-pink-500" id="nav-order">Pesan</button>
+                <button onclick="switchView('track-view')" class="nav-btn text-pink-600 font-bold hover:text-pink-800 transition px-2 py-1 border-b-2 border-transparent hover:border-pink-500" id="nav-track">Cek Status</button>
+                <button onclick="switchView('admin-dashboard-view')" class="nav-btn text-pink-600 font-bold hover:text-pink-800 transition px-2 py-1 border-b-2 border-transparent hover:border-pink-500" id="nav-admin">Admin</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Container -->
+    <main class="max-w-4xl mx-auto p-4 py-8">
+        
+        <!-- ==================== ORDER VIEW ==================== -->
+        <div id="order-view" class="view-section active-view">
+            
+            <!-- Mincus AI Section -->
+            <div class="cute-card mb-8 p-6 md:p-8 text-center relative overflow-hidden">
+                <div class="absolute -right-6 -top-6 opacity-20 text-7xl transform rotate-12 pointer-events-none">✨</div>
+                
+                <h2 class="font-cute text-pink-500 text-2xl md:text-3xl mb-2">Bingung kata-kata ucapan? 💭</h2>
+                <p class="text-sm md:text-base text-pink-600 mb-5">Ceritain aja buat siapa dan acaranya apa, biar Mincus AI bantu bikinin ucapan yang manis!</p>
+                
+                <div class="flex flex-col sm:flex-row gap-3 justify-center max-w-2xl mx-auto">
+                    <input type="text" id="ai_prompt" class="cute-input flex-1" placeholder="Misal: Ucapan ultah romantis buat pacar yang lagi LDR...">
+                    <button id="btn_ai_magic" onclick="generateIdea()" class="bg-gradient-to-r from-pink-400 to-pink-500 hover:from-pink-500 hover:to-pink-600 text-white font-bold py-3 px-6 rounded-xl transition transform hover:scale-105 shadow-lg shadow-pink-500/30 whitespace-nowrap flex items-center justify-center">
+                        <i class="fa-solid fa-wand-magic-sparkles mr-2"></i> Buat Ucapan ✨
+                    </button>
+                </div>
+
+                <div id="ai_loading" class="hidden mt-5 text-sm text-pink-600 font-bold items-center justify-center gap-2">
+                    <i class="fa-solid fa-spinner fa-spin text-xl"></i> Mincus AI sedang merangkai kata...
+                </div>
+            </div>
+
+            <!-- Galeri Karya Mincus Section -->
+            <div class="cute-card mb-8 p-6 md:p-8">
+                <h2 class="font-cute text-pink-500 text-2xl md:text-3xl mb-2 text-center">📸 Galeri Karya Mincus</h2>
+                <p class="text-center text-pink-600 mb-6 text-sm md:text-base">Beberapa kue cantik dan manis yang pernah kami buat! ✨</p>
+                
+                <div id="gallery-grid" class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <p class="text-sm text-gray-400 col-span-full text-center w-full">Memuat galeri...</p>
+                </div>
+            </div>
+
+            <!-- ==================== ULASAN PELANGGAN SECTION ==================== -->
+            <div class="cute-card mb-8 p-6 md:p-8">
+                <h2 class="font-cute text-pink-500 text-2xl md:text-3xl mb-2 text-center">🌟 Ulasan Pelanggan</h2>
+                <p class="text-center text-pink-600 mb-6 text-sm md:text-base">Apa kata mereka tentang kue Mincus? 💕</p>
+                
+                <div id="reviews-display" class="flex overflow-x-auto gap-4 pb-4 mb-6 snap-x">
+                    <p class="text-sm text-gray-400 text-center w-full">Memuat ulasan...</p>
+                </div>
+
+                <div class="bg-pink-50 p-5 rounded-xl border border-pink-200">
+                    <h3 class="font-bold text-pink-600 mb-3">Tulis Ulasanmu ✨</h3>
+                    <div class="space-y-3">
+                        <div class="flex gap-2 text-2xl text-yellow-400 mb-2 cursor-pointer" id="star-rating-input">
+                            <i class="fa-solid fa-star star-btn" id="star-1" onclick="setRating(1)"></i>
+                            <i class="fa-solid fa-star star-btn" id="star-2" onclick="setRating(2)"></i>
+                            <i class="fa-solid fa-star star-btn" id="star-3" onclick="setRating(3)"></i>
+                            <i class="fa-solid fa-star star-btn" id="star-4" onclick="setRating(4)"></i>
+                            <i class="fa-solid fa-star star-btn" id="star-5" onclick="setRating(5)"></i>
+                        </div>
+                        <input type="text" id="rev_nama" class="cute-input py-2 text-sm" placeholder="Nama kamu...">
+                        <textarea id="rev_pesan" class="cute-input py-2 text-sm" rows="2" placeholder="Kuenya enak banget! 💕"></textarea>
+                        <button id="btn-submit-review" onclick="submitReview()" class="bg-pink-400 hover:bg-pink-500 text-white font-bold py-2 px-6 rounded-lg transition text-sm shadow-sm">
+                            Kirim Ulasan 🌟
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Formulir Pemesanan -->
+            <div class="cute-card p-6 md:p-8 relative">
+                
+                <div id="store-closed-overlay" class="hidden absolute inset-0 bg-white/60 backdrop-blur-sm z-10 rounded-[1.5rem] flex flex-col items-center justify-center text-center p-6 border-3 border-dashed border-pink-300">
+                    <div class="text-6xl mb-4">😴</div>
+                    <h2 class="font-cute text-pink-600 text-3xl mb-2">Toko Sedang Tutup</h2>
+                    <p id="store-closed-message" class="text-pink-700 font-bold bg-white/80 p-3 rounded-xl shadow-sm">Maaf ya kak, Mincus lagi istirahat atau kuota pesanan penuh hari ini. Kembali lagi besok ya! 💕</p>
+                </div>
+
+                <h2 class="font-cute text-pink-500 text-2xl mb-4 text-center border-b-2 border-dashed border-pink-200 pb-4">✨ Form Order Cake ✨</h2>
+                
+                <form id="orderForm" class="space-y-5">
+                    <div>
+                        <label class="block font-bold text-pink-500 mb-1"><i class="fa-solid fa-user-heart mr-1.5 text-pink-400"></i> Nama pemesan :</label>
+                        <input type="text" id="f_nama" class="cute-input" placeholder="Ketik namamu..." required>
+                    </div>
+                    
+                    <div>
+                        <label class="block font-bold text-pink-500 mb-1"><i class="fa-solid fa-cake-candles mr-1.5 text-pink-400"></i> Pesanan :</label>
+                        <input type="text" id="f_pesanan" class="cute-input" placeholder="Misal: Korean Vintage Cake" required>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                        <div>
+                            <label class="block font-bold text-pink-500 mb-1"><i class="fa-solid fa-ruler-combined mr-1.5 text-pink-400"></i> Ukuran kue :</label>
+                            <select id="f_ukuran" class="cute-input" required>
+                                <option value="" disabled selected>Pilih ukuran</option>
+                                <option value="10 cm bento cake">1. 10 cm bento cake</option>
+                                <option value="12 cm">2. 12 cm</option>
+                                <option value="14 cm">3. 14 cm</option>
+                                <option value="16 cm">4. 16 cm</option>
+                                <option value="18 cm">5. 18 cm</option>
+                                <option value="20 cm">6. 20 cm</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block font-bold text-pink-500 mb-1"><i class="fa-solid fa-bread-slice mr-1.5 text-pink-400"></i> Base cake :</label>
+                            <select id="f_base" class="cute-input" required>
+                                <option value="" disabled selected>Pilih base cake</option>
+                                <option value="Bolu">1. Bolu</option>
+                                <option value="Brownies (+5k)">2. Brownies (+5k)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block font-bold text-pink-500 mb-1"><i class="fa-solid fa-palette mr-1.5 text-pink-400"></i> Warna kue :</label>
+                        <input type="text" id="f_warna" class="cute-input" placeholder="Misal: Dasar pink pastel, pita putih" required>
+                    </div>
+
+                    <div>
+                        <label class="block font-bold text-pink-500 mb-1"><i class="fa-solid fa-wand-magic mr-1.5 text-pink-400"></i> Detail bentuk & gambar kue :</label>
+                        <textarea id="f_detail" class="cute-input" rows="3" placeholder="Deskripsikan bentuknya (Referensi gambar bisa dikirim via WA)" required></textarea>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                        <div>
+                            <label class="block font-bold text-pink-500 mb-1"><i class="fa-solid fa-pen-nib mr-1.5 text-pink-400"></i> Tulisan kue :</label>
+                            <input type="text" id="f_tulisan_kue" class="cute-input" placeholder="Kosongkan jika tidak ada">
+                        </div>
+                        <div>
+                            <label class="block font-bold text-pink-500 mb-1"><i class="fa-solid fa-sign mr-1.5 text-pink-400"></i> Tulisan papan kue :</label>
+                            <input type="text" id="f_tulisan_papan" class="cute-input" placeholder="Kosongkan jika tidak ada">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                        <div>
+                            <label class="block font-bold text-pink-500 mb-1"><i class="fa-solid fa-calendar-days mr-1.5 text-pink-400"></i> Hari, tanggal :</label>
+                            <input type="date" id="f_tanggal" class="cute-input" required>
+                        </div>
+                        <div>
+                            <label class="block font-bold text-pink-500 mb-1"><i class="fa-solid fa-clock mr-1.5 text-pink-400"></i> Jam pengambilan :</label>
+                            <input type="time" id="f_jam" class="cute-input" required>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block font-bold text-pink-500 mb-1"><i class="fa-solid fa-wallet mr-1.5 text-pink-400"></i> Metode Pembayaran :</label>
+                        <select id="f_metode" class="cute-input" required>
+                            <option value="" disabled selected>Pilih metode pembayaran</option>
+                            <option value="Cash">Cash (Tunai)</option>
+                            <option value="QRIS">QRIS</option>
+                        </select>
+                    </div>
+
+                    <div id="form-message" class="hidden p-3 rounded-lg text-center font-bold"></div>
+
+                    <button type="submit" id="btn-submit-order" class="w-full bg-gradient-to-r from-pink-400 to-pink-500 hover:from-pink-500 hover:to-pink-600 text-white font-bold py-4 rounded-xl transition transform hover:scale-105 shadow-lg shadow-pink-500/30 mt-4 text-lg tracking-wide">
+                        <i class="fa-brands fa-whatsapp mr-2 text-xl"></i> Kirim Pesanan 💖
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- ==================== TRACK ORDER VIEW ==================== -->
+        <div id="track-view" class="view-section hidden">
+            <div class="cute-card p-6 md:p-8 max-w-2xl mx-auto min-h-[50vh]">
+                <h2 class="font-cute text-pink-500 text-2xl md:text-3xl mb-2 text-center">🕵️‍♀️ Lacak Pesananmu</h2>
+                <p class="text-center text-pink-600 mb-6 text-sm">Pantau aktivitas admin dan status kue kamu di sini! ✨</p>
+                
+                <div class="flex flex-col sm:flex-row gap-3 mb-8">
+                    <input type="text" id="track_name" class="cute-input flex-1" placeholder="Masukkan namamu (sesuai saat pesan)...">
+                    <button onclick="searchOrder()" class="bg-gradient-to-r from-pink-400 to-pink-500 hover:from-pink-500 hover:to-pink-600 text-white font-bold py-3 px-6 rounded-xl transition shadow-lg shadow-pink-500/30 whitespace-nowrap">
+                        <i class="fa-solid fa-magnifying-glass mr-2"></i> Cari Pesanan
+                    </button>
+                </div>
+
+                <div id="track-results" class="space-y-6">
+                    <div class="text-center text-pink-300 py-10">
+                        <i class="fa-solid fa-cake-candles text-5xl mb-4 opacity-50"></i>
+                        <p class="font-bold">Ketik nama kamu di atas untuk melihat status kue ya! 💕</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== ADMIN LOGIN VIEW ==================== -->
+        <div id="admin-login-view" class="view-section hidden">
+            <div class="cute-card max-w-md mx-auto p-8 text-center mt-10 flex flex-col items-center">
+                <div id="logo-container-login" class="mb-6 flex justify-center">
+                    <svg width="80" height="80" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" class="drop-shadow-xl">
+                        <path d="M 10 85 Q 50 100 90 85 Q 95 85 95 90 Q 50 105 5 90 Q 5 85 10 85 Z" fill="#ff99bb"/>
+                        <ellipse cx="50" cy="85" rx="40" ry="8" fill="#ffcce0"/>
+                        <path d="M 20 85 L 20 45 C 20 40 80 40 80 45 L 80 85 Z" fill="#fff0f5" stroke="#ff4d88" stroke-width="4"/>
+                        <path d="M 18 45 C 18 35 82 35 82 45 C 82 50 75 55 68 45 C 68 55 58 55 50 45 C 42 55 32 55 32 45 C 25 55 18 50 18 45 Z" fill="#ff99bb" stroke="#ff4d88" stroke-width="4" stroke-linejoin="round"/>
+                        <rect x="28" y="22" width="8" height="23" fill="#fffafc" stroke="#ff4d88" stroke-width="2" rx="1"/>
+                        <path d="M 32 8 C 29 13 29 17 32 20 C 35 17 35 13 32 8 Z" fill="#ffb703" stroke="#fb8500" stroke-width="2"/>
+                        <rect x="46" y="15" width="8" height="30" fill="#fffafc" stroke="#ff4d88" stroke-width="2" rx="1"/>
+                        <path d="M 50 1 C 47 6 47 10 50 13 C 53 10 53 6 50 1 Z" fill="#ffb703" stroke="#fb8500" stroke-width="2"/>
+                        <rect x="64" y="22" width="8" height="23" fill="#fffafc" stroke="#ff4d88" stroke-width="2" rx="1"/>
+                        <path d="M 68 8 C 65 13 65 17 68 20 C 71 17 71 13 68 8 Z" fill="#ffb703" stroke="#fb8500" stroke-width="2"/>
+                        <circle cx="35" cy="65" r="4" fill="#5a3d46"/>
+                        <circle cx="65" cy="65" r="4" fill="#5a3d46"/>
+                        <path d="M 45 70 Q 50 75 55 70" fill="none" stroke="#5a3d46" stroke-width="3" stroke-linecap="round"/>
+                        <ellipse cx="25" cy="68" rx="5" ry="3" fill="#ff4d88" opacity="0.4"/>
+                        <ellipse cx="75" cy="68" rx="5" ry="3" fill="#ff4d88" opacity="0.4"/>
+                    </svg>
+                </div>
+                <h2 class="font-cute text-pink-500 text-3xl mb-6">Login Kasir / Admin</h2>
+                <form id="loginForm" class="space-y-4 w-full">
+                    <div>
+                        <input type="password" id="admin_password" class="cute-input text-center text-lg" placeholder="Masukkan Kata Sandi" required>
+                    </div>
+                    <div id="login-error" class="hidden text-red-500 text-sm font-bold">Sandi salah, coba lagi!</div>
+                    <button type="submit" class="w-full bg-gradient-to-r from-pink-400 to-pink-500 hover:from-pink-500 hover:to-pink-600 text-white font-bold py-3 rounded-xl transition shadow-lg shadow-pink-500/30">
+                        Masuk ✨
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- ==================== ADMIN DASHBOARD VIEW ==================== -->
+        <div id="admin-dashboard-view" class="view-section hidden">
+            <div class="flex flex-col md:flex-row justify-between items-center mb-6">
+                <div class="flex items-center gap-4">
+                    <div id="logo-container-admin" class="hidden md:flex">
+                        <svg width="70" height="70" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" class="drop-shadow-lg">
+                            <path d="M 10 85 Q 50 100 90 85 Q 95 85 95 90 Q 50 105 5 90 Q 5 85 10 85 Z" fill="#ff99bb"/>
+                            <ellipse cx="50" cy="85" rx="40" ry="8" fill="#ffcce0"/>
+                            <path d="M 20 85 L 20 45 C 20 40 80 40 80 45 L 80 85 Z" fill="#fff0f5" stroke="#ff4d88" stroke-width="4"/>
+                            <path d="M 18 45 C 18 35 82 35 82 45 C 82 50 75 55 68 45 C 68 55 58 55 50 45 C 42 55 32 55 32 45 C 25 55 18 50 18 45 Z" fill="#ff99bb" stroke="#ff4d88" stroke-width="4" stroke-linejoin="round"/>
+                            <rect x="28" y="22" width="8" height="23" fill="#fffafc" stroke="#ff4d88" stroke-width="2" rx="1"/>
+                            <path d="M 32 8 C 29 13 29 17 32 20 C 35 17 35 13 32 8 Z" fill="#ffb703" stroke="#fb8500" stroke-width="2"/>
+                            <rect x="46" y="15" width="8" height="30" fill="#fffafc" stroke="#ff4d88" stroke-width="2" rx="1"/>
+                            <path d="M 50 1 C 47 6 47 10 50 13 C 53 10 53 6 50 1 Z" fill="#ffb703" stroke="#fb8500" stroke-width="2"/>
+                            <rect x="64" y="22" width="8" height="23" fill="#fffafc" stroke="#ff4d88" stroke-width="2" rx="1"/>
+                            <path d="M 68 8 C 65 13 65 17 68 20 C 71 17 71 13 68 8 Z" fill="#ffb703" stroke="#fb8500" stroke-width="2"/>
+                            <circle cx="35" cy="65" r="4" fill="#5a3d46"/>
+                            <circle cx="65" cy="65" r="4" fill="#5a3d46"/>
+                            <path d="M 45 70 Q 50 75 55 70" fill="none" stroke="#5a3d46" stroke-width="3" stroke-linecap="round"/>
+                            <ellipse cx="25" cy="68" rx="5" ry="3" fill="#ff4d88" opacity="0.4"/>
+                            <ellipse cx="75" cy="68" rx="5" ry="3" fill="#ff4d88" opacity="0.4"/>
+                        </svg>
+                    </div>
+                    <div class="text-center md:text-left">
+                        <h1 class="font-cute text-pink-500 text-3xl">Dashboard Kasir 🎀</h1>
+                        <p class="text-pink-600 font-semibold">Halo Admin! Kelola pesanan di sini.</p>
+                    </div>
+                </div>
+                <button onclick="logoutAdmin()" class="mt-4 md:mt-0 bg-white border-2 border-pink-300 text-pink-600 hover:bg-pink-50 px-4 py-2 rounded-xl font-bold transition">
+                    Keluar <i class="fa-solid fa-sign-out-alt ml-1"></i>
+                </button>
+            </div>
+
+            <!-- Store Settings & Logo Upload & Gallery Management -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                <!-- Status Toko -->
+                <div class="cute-card p-6">
+                    <h3 class="font-bold text-pink-600 text-lg mb-4"><i class="fa-solid fa-store mr-2"></i> Status Toko</h3>
+                    <div class="flex flex-col gap-3 bg-pink-50 p-4 rounded-xl border border-pink-200">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="font-bold text-gray-700 mb-1">Terima Pesanan?</p>
+                                <p id="admin-status-text" class="text-sm text-green-600 font-bold">Buka</p>
+                            </div>
+                            <label class="relative inline-flex items-center cursor-pointer">
+                                <input type="checkbox" id="toggle-store-status" class="sr-only peer" onchange="toggleStoreStatus(this.checked)" checked>
+                                <div class="w-14 h-7 bg-gray-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-6 after:w-6 after:transition-all peer-checked:bg-green-400"></div>
+                            </label>
+                        </div>
+                        <div id="close-reason-container" class="mt-2 pt-3 border-t border-pink-200">
+                            <label class="block text-xs font-bold text-pink-500 mb-1">Keterangan Tutup (Opsional)</label>
+                            <div class="flex gap-2">
+                                <input type="text" id="admin-close-reason" class="cute-input py-2 text-sm flex-1" placeholder="Misal: Mincus lagi belanja bahan! 🏃‍♀️">
+                                <button onclick="saveCloseReason()" class="bg-pink-400 hover:bg-pink-500 text-white px-3 py-2 rounded-lg text-sm transition" title="Simpan Keterangan"><i class="fa-solid fa-save"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ubah Logo Toko -->
+                <div class="cute-card p-6">
+                    <h3 class="font-bold text-pink-600 text-lg mb-4"><i class="fa-solid fa-image mr-2"></i> Logo Toko Anda</h3>
+                    <div class="space-y-3">
+                        <input type="file" id="admin-logo-file" accept="image/*" class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-pink-50 file:text-pink-700 hover:file:bg-pink-100 cursor-pointer border border-pink-200 rounded-lg p-1 bg-white">
+                        <button id="btn-update-logo" onclick="updateStoreLogo()" class="w-full bg-pink-400 hover:bg-pink-500 text-white font-bold py-2 rounded-lg transition text-sm flex justify-center items-center">
+                            <i class="fa-solid fa-upload mr-2"></i> Pasang Logo Baru
+                        </button>
+                        <button onclick="resetStoreLogo()" class="w-full bg-gray-100 hover:bg-gray-200 text-gray-600 font-bold py-1.5 rounded-lg transition text-xs">
+                            Kembalikan Logo Default 🎂
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Kelola Galeri -->
+                <div class="cute-card p-6">
+                    <h3 class="font-bold text-pink-600 text-lg mb-4"><i class="fa-solid fa-images mr-2"></i> Tambah Foto Galeri</h3>
+                    <div class="space-y-3">
+                        <input type="file" id="admin-gal-file" accept="image/*" class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-pink-50 file:text-pink-700 hover:file:bg-pink-100 cursor-pointer border border-pink-200 rounded-lg p-1 bg-white">
+                        <input type="text" id="admin-gal-title" class="cute-input py-2 text-sm" placeholder="Nama/Judul Kue...">
+                        <button id="btn-add-gallery" onclick="addGalleryImage()" class="w-full bg-pink-400 hover:bg-pink-500 text-white font-bold py-2 rounded-lg transition text-sm flex justify-center items-center">
+                            <i class="fa-solid fa-plus mr-2"></i> Tambah ke Galeri
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Galeri Admin Grid -->
+            <div class="cute-card p-6 mb-8">
+                <h3 class="font-bold text-pink-600 text-lg mb-4"><i class="fa-solid fa-image mr-2"></i> Hapus Foto Galeri</h3>
+                <div id="admin-gallery-list" class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 gap-3">
+                    <p class="text-sm text-gray-400 col-span-full">Memuat galeri...</p>
+                </div>
+            </div>
+
+            <!-- Pesanan Aktif -->
+            <h2 class="font-cute text-pink-500 text-2xl mb-4 border-b-2 border-dashed border-pink-200 pb-2">📦 Pesanan Aktif</h2>
+            <div id="active-orders-container" class="space-y-6 mb-10">
+                <div class="text-center text-pink-400 py-10">
+                    <i class="fa-solid fa-circle-notch fa-spin text-4xl mb-3"></i>
+                    <p>Memuat pesanan lucu...</p>
+                </div>
+            </div>
+
+            <!-- Riwayat Pembelian -->
+            <h2 class="font-cute text-pink-500 text-2xl mb-4 border-b-2 border-dashed border-pink-200 pb-2">📜 Riwayat Pembelian (Selesai/Batal)</h2>
+            <div id="history-orders-container" class="space-y-6 mb-10">
+                <div class="text-center text-pink-400 py-10">
+                    <i class="fa-solid fa-circle-notch fa-spin text-4xl mb-3"></i>
+                    <p>Memuat riwayat...</p>
+                </div>
+            </div>
+
+            <!-- Kelola Ulasan Admin -->
+            <h2 class="font-cute text-pink-500 text-2xl mb-4 border-b-2 border-dashed border-pink-200 pb-2">⭐ Kelola Ulasan</h2>
+            <div class="cute-card p-6 mb-10">
+                <div id="admin-reviews-container" class="space-y-4">
+                    <p class="text-sm text-gray-400 text-center">Memuat ulasan...</p>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Custom Modal Popup Mincus -->
+    <div id="custom-modal" class="hidden fixed inset-0 bg-pink-900/40 backdrop-blur-sm z-[100] flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl p-6 max-w-sm w-full shadow-2xl border-4 border-pink-200 text-center transform scale-100 transition-transform">
+            <div id="modal-icon" class="text-5xl mb-4 drop-shadow-md">✨</div>
+            <h3 id="modal-title" class="font-cute text-2xl text-pink-500 mb-2">Pemberitahuan</h3>
+            <p id="modal-message" class="text-pink-700 font-bold mb-6"></p>
+            <div class="flex gap-3 justify-center" id="modal-buttons"></div>
+        </div>
+    </div>
+
+    <!-- Firebase SDK Imports -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, collection, addDoc, onSnapshot, doc, updateDoc, query, orderBy, setDoc, deleteDoc, getDocs } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'ncus-sweet-bake';
+        const firebaseConfigStr = typeof __firebase_config !== 'undefined' ? __firebase_config : '{}';
+        let firebaseConfig = {};
+        
+        try {
+            firebaseConfig = JSON.parse(firebaseConfigStr);
+        } catch (e) {
+            console.warn("Could not parse firebase config.");
+        }
+
+        let app, db, auth;
+        let isFirebaseReady = false;
+        let currentUser = null;
+
+        if (firebaseConfig && firebaseConfig.projectId) {
+            app = initializeApp(firebaseConfig);
+            db = getFirestore(app);
+            auth = getAuth(app);
+            isFirebaseReady = true;
+            
+            const authToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+            if (authToken) {
+                signInWithCustomToken(auth, authToken).catch(() => signInAnonymously(auth));
+            } else {
+                signInAnonymously(auth).catch(() => {});
+            }
+
+            onAuthStateChanged(auth, (user) => {
+                if (user) {
+                    currentUser = user;
+                    listenStoreSettings();
+                    listenStoreLogo();
+                    listenGallery();
+                    listenReviews();
+                    if(document.getElementById('admin-dashboard-view').classList.contains('active-view')){
+                        loadOrders();
+                    }
+                }
+            });
+        }
+
+        // ==================== UI STATE MANAGEMENT ====================
+        window.showModal = function(message, type = 'info', onConfirm = null) {
+            const modal = document.getElementById('custom-modal');
+            const msgEl = document.getElementById('modal-message');
+            const iconEl = document.getElementById('modal-icon');
+            const btnContainer = document.getElementById('modal-buttons');
+            
+            msgEl.innerHTML = message;
+            if (type === 'confirm') {
+                iconEl.innerHTML = '🥺';
+                btnContainer.innerHTML = `
+                    <button onclick="closeModal()" class="px-5 py-2 bg-white border-2 border-pink-300 text-pink-500 font-bold rounded-xl hover:bg-pink-50 transition">Batal</button>
+                    <button id="modal-confirm-btn" class="px-5 py-2 bg-pink-500 text-white font-bold rounded-xl hover:bg-pink-600 transition shadow-lg shadow-pink-500/30">Yakin!</button>
+                `;
+                document.getElementById('modal-confirm-btn').onclick = () => {
+                    closeModal();
+                    if(onConfirm) onConfirm();
+                };
+            } else {
+                iconEl.innerHTML = type === 'error' ? '❌' : '✨';
+                btnContainer.innerHTML = `
+                    <button onclick="closeModal()" class="w-full px-5 py-3 bg-pink-500 text-white font-bold rounded-xl hover:bg-pink-600 transition shadow-lg shadow-pink-500/30">Oke, siap! 💕</button>
+                `;
+            }
+            modal.classList.remove('hidden');
+        }
+
+        window.closeModal = function() {
+            document.getElementById('custom-modal').classList.add('hidden');
+        }
+
+        window.switchView = function(viewId) {
+            document.querySelectorAll('.view-section').forEach(el => {
+                el.classList.add('hidden');
+                el.classList.remove('active-view');
+            });
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('border-pink-500');
+                btn.classList.add('border-transparent');
+            });
+
+            const view = document.getElementById(viewId);
+            if(view) {
+                view.classList.remove('hidden');
+                view.classList.add('active-view');
+            }
+
+            if(viewId === 'order-view') document.getElementById('nav-order').classList.replace('border-transparent', 'border-pink-500');
+            if(viewId === 'track-view') document.getElementById('nav-track').classList.replace('border-transparent', 'border-pink-500');
+            if(viewId === 'admin-login-view' || viewId === 'admin-dashboard-view') document.getElementById('nav-admin').classList.replace('border-transparent', 'border-pink-500');
+
+            if(viewId === 'admin-dashboard-view') {
+                loadOrders();
+            }
+        }
+
+        switchView('order-view');
+
+        // ==================== DEFAULT SVG LOGO ====================
+        const defaultLogoSvg = `
+            <svg width="45" height="45" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" class="drop-shadow-md">
+                <path d="M 10 85 Q 50 100 90 85 Q 95 85 95 90 Q 50 105 5 90 Q 5 85 10 85 Z" fill="#ff99bb"/>
+                <ellipse cx="50" cy="85" rx="40" ry="8" fill="#ffcce0"/>
+                <path d="M 20 85 L 20 45 C 20 40 80 40 80 45 L 80 85 Z" fill="#fff0f5" stroke="#ff4d88" stroke-width="4"/>
+                <path d="M 18 45 C 18 35 82 35 82 45 C 82 50 75 55 68 45 C 68 55 58 55 50 45 C 42 55 32 55 32 45 C 25 55 18 50 18 45 Z" fill="#ff99bb" stroke="#ff4d88" stroke-width="4" stroke-linejoin="round"/>
+                <rect x="28" y="22" width="8" height="23" fill="#fffafc" stroke="#ff4d88" stroke-width="2" rx="1"/>
+                <path d="M 32 8 C 29 13 29 17 32 20 C 35 17 35 13 32 8 Z" fill="#ffb703" stroke="#fb8500" stroke-width="2"/>
+                <rect x="46" y="15" width="8" height="30" fill="#fffafc" stroke="#ff4d88" stroke-width="2" rx="1"/>
+                <path d="M 50 1 C 47 6 47 10 50 13 C 53 10 53 6 50 1 Z" fill="#ffb703" stroke="#fb8500" stroke-width="2"/>
+                <rect x="64" y="22" width="8" height="23" fill="#fffafc" stroke="#ff4d88" stroke-width="2" rx="1"/>
+                <path d="M 68 8 C 65 13 65 17 68 20 C 71 17 71 13 68 8 Z" fill="#ffb703" stroke="#fb8500" stroke-width="2"/>
+                <circle cx="35" cy="65" r="4" fill="#5a3d46"/>
+                <circle cx="65" cy="65" r="4" fill="#5a3d46"/>
+                <path d="M 45 70 Q 50 75 55 70" fill="none" stroke="#5a3d46" stroke-width="3" stroke-linecap="round"/>
+                <ellipse cx="25" cy="68" rx="5" ry="3" fill="#ff4d88" opacity="0.4"/>
+                <ellipse cx="75" cy="68" rx="5" ry="3" fill="#ff4d88" opacity="0.4"/>
+            </svg>
+        `;
+
+        const defaultLogoSvgLogin = `
+            <svg width="80" height="80" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" class="drop-shadow-xl">
+                <path d="M 10 85 Q 50 100 90 85 Q 95 85 95 90 Q 50 105 5 90 Q 5 85 10 85 Z" fill="#ff99bb"/>
+                <ellipse cx="50" cy="85" rx="40" ry="8" fill="#ffcce0"/>
+                <path d="M 20 85 L 20 45 C 20 40 80 40 80 45 L 80 85 Z" fill="#fff0f5" stroke="#ff4d88" stroke-width="4"/>
+                <path d="M 18 45 C 18 35 82 35 82 45 C 82 50 75 55 68 45 C 68 55 58 55 50 45 C 42 55 32 55 32 45 C 25 55 18 50 18 45 Z" fill="#ff99bb" stroke="#ff4d88" stroke-width="4" stroke-linejoin="round"/>
+                <rect x="28" y="22" width="8" height="23" fill="#fffafc" stroke="#ff4d88" stroke-width="2" rx="1"/>
+                <path d="M 32 8 C 29 13 29 17 32 20 C 35 17 35 13 32 8 Z" fill="#ffb703" stroke="#fb8500" stroke-width="2"/>
+                <rect x="46" y="15" width="8" height="30" fill="#fffafc" stroke="#ff4d88" stroke-width="2" rx="1"/>
+                <path d="M 50 1 C 47 6 47 10 50 13 C 53 10 53 6 50 1 Z" fill="#ffb703" stroke="#fb8500" stroke-width="2"/>
+                <rect x="64" y="22" width="8" height="23" fill="#fffafc" stroke="#ff4d88" stroke-width="2" rx="1"/>
+                <path d="M 68 8 C 65 13 65 17 68 20 C 71 17 71 13 68 8 Z" fill="#ffb703" stroke="#fb8500" stroke-width="2"/>
+                <circle cx="35" cy="65" r="4" fill="#5a3d46"/>
+                <circle cx="65" cy="65" r="4" fill="#5a3d46"/>
+                <path d="M 45 70 Q 50 75 55 70" fill="none" stroke="#5a3d46" stroke-width="3" stroke-linecap="round"/>
+                <ellipse cx="25" cy="68" rx="5" ry="3" fill="#ff4d88" opacity="0.4"/>
+                <ellipse cx="75" cy="68" rx="5" ry="3" fill="#ff4d88" opacity="0.4"/>
+            </svg>
+        `;
+
+        const defaultLogoSvgAdmin = `
+            <svg width="70" height="70" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" class="drop-shadow-lg">
+                <path d="M 10 85 Q 50 100 90 85 Q 95 85 95 90 Q 50 105 5 90 Q 5 85 10 85 Z" fill="#ff99bb"/>
+                <ellipse cx="50" cy="85" rx="40" ry="8" fill="#ffcce0"/>
+                <path d="M 20 85 L 20 45 C 20 40 80 40 80 45 L 80 85 Z" fill="#fff0f5" stroke="#ff4d88" stroke-width="4"/>
+                <path d="M 18 45 C 18 35 82 35 82 45 C 82 50 75 55 68 45 C 68 55 58 55 50 45 C 42 55 32 55 32 45 C 25 55 18 50 18 45 Z" fill="#ff99bb" stroke="#ff4d88" stroke-width="4" stroke-linejoin="round"/>
+                <rect x="28" y="22" width="8" height="23" fill="#fffafc" stroke="#ff4d88" stroke-width="2" rx="1"/>
+                <path d="M 32 8 C 29 13 29 17 32 20 C 35 17 35 13 32 8 Z" fill="#ffb703" stroke="#fb8500" stroke-width="2"/>
+                <rect x="46" y="15" width="8" height="30" fill="#fffafc" stroke="#ff4d88" stroke-width="2" rx="1"/>
+                <path d="M 50 1 C 47 6 47 10 50 13 C 53 10 53 6 50 1 Z" fill="#ffb703" stroke="#fb8500" stroke-width="2"/>
+                <rect x="64" y="22" width="8" height="23" fill="#fffafc" stroke="#ff4d88" stroke-width="2" rx="1"/>
+                <path d="M 68 8 C 65 13 65 17 68 20 C 71 17 71 13 68 8 Z" fill="#ffb703" stroke="#fb8500" stroke-width="2"/>
+                <circle cx="35" cy="65" r="4" fill="#5a3d46"/>
+                <circle cx="65" cy="65" r="4" fill="#5a3d46"/>
+                <path d="M 45 70 Q 50 75 55 70" fill="none" stroke="#5a3d46" stroke-width="3" stroke-linecap="round"/>
+                <ellipse cx="25" cy="68" rx="5" ry="3" fill="#ff4d88" opacity="0.4"/>
+                <ellipse cx="75" cy="68" rx="5" ry="3" fill="#ff4d88" opacity="0.4"/>
+            </svg>
+        `;
+
+        function listenStoreLogo() {
+            if (!isFirebaseReady) return;
+            const logoRef = doc(db, 'artifacts', appId, 'public', 'data', 'settings', 'store_logo');
+            
+            onSnapshot(logoRef, (docSnap) => {
+                const navContainer = document.getElementById('logo-container-nav');
+                const loginContainer = document.getElementById('logo-container-login');
+                const adminContainer = document.getElementById('logo-container-admin');
+
+                if (docSnap.exists() && docSnap.data().url) {
+                    const url = docSnap.data().url;
+                    const customLogoNav = `<img src="${url}" alt="Logo Toko" class="w-12 h-12 rounded-full object-cover shadow-md border-2 border-pink-300">`;
+                    const customLogoLogin = `<img src="${url}" alt="Logo Toko" class="w-20 h-20 rounded-full object-cover shadow-xl border-3 border-pink-300 mx-auto">`;
+                    const customLogoAdmin = `<img src="${url}" alt="Logo Toko" class="w-16 h-16 rounded-full object-cover shadow-lg border-2 border-pink-300">`;
+
+                    if(navContainer) navContainer.innerHTML = customLogoNav;
+                    if(loginContainer) loginContainer.innerHTML = customLogoLogin;
+                    if(adminContainer) adminContainer.innerHTML = customLogoAdmin;
+                } else {
+                    if(navContainer) navContainer.innerHTML = defaultLogoSvg;
+                    if(loginContainer) loginContainer.innerHTML = defaultLogoSvgLogin;
+                    if(adminContainer) adminContainer.innerHTML = defaultLogoSvgAdmin;
+                }
+            });
+        }
+
+        window.updateStoreLogo = async function() {
+            if (!isFirebaseReady || !currentUser) return;
+            const fileInput = document.getElementById('admin-logo-file');
+            const btn = document.getElementById('btn-update-logo');
+
+            if (!fileInput.files || fileInput.files.length === 0) {
+                showModal("Pilih gambar logonya dulu ya kak! 💕", 'error');
+                return;
+            }
+
+            const file = fileInput.files[0];
+            if (!file.type.startsWith('image/')) {
+                showModal("File harus berupa gambar ya!", 'error');
+                return;
+            }
+
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> Mengunggah...';
+
+            try {
+                const base64Image = await compressImageAndGetBase64(file, 400);
+                const logoRef = doc(db, 'artifacts', appId, 'public', 'data', 'settings', 'store_logo');
+                await setDoc(logoRef, { url: base64Image }, { merge: true });
+                
+                fileInput.value = '';
+                showModal("Yeay! Logo toko berhasil diperbarui di seluruh halaman! ✨", 'info');
+            } catch (err) {
+                console.error("Error updating logo:", err);
+                showModal("Gagal memperbarui logo 🥺", 'error');
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fa-solid fa-upload mr-2"></i> Pasang Logo Baru';
+            }
+        }
+
+        window.resetStoreLogo = async function() {
+            if (!isFirebaseReady || !currentUser) return;
+            showModal("Yakin ingin mengembalikan logo default kue ulang tahun 3 lilin?", 'confirm', async () => {
+                try {
+                    const logoRef = doc(db, 'artifacts', appId, 'public', 'data', 'settings', 'store_logo');
+                    await setDoc(logoRef, { url: "" }, { merge: true });
+                    showModal("Logo dikembalikan ke default! ✨", 'info');
+                } catch (err) {
+                    console.error("Error resetting logo:", err);
+                }
+            });
+        }
+
+        // ==================== STORE SETTINGS & GALLERY ====================
+        let isStoreOpen = true;
+
+        function listenStoreSettings() {
+            if (!isFirebaseReady) return;
+            const statusRef = doc(db, 'artifacts', appId, 'public', 'data', 'settings', 'store_status');
+            
+            onSnapshot(statusRef, (docSnap) => {
+                const overlay = document.getElementById('store-closed-overlay');
+                const toggle = document.getElementById('toggle-store-status');
+                const statusText = document.getElementById('admin-status-text');
+                const messageEl = document.getElementById('store-closed-message');
+                const reasonInput = document.getElementById('admin-close-reason');
+
+                let closeReason = "Maaf ya kak, Mincus lagi istirahat atau kuota pesanan penuh hari ini. Kembali lagi besok ya! 💕";
+
+                if (docSnap.exists()) {
+                    isStoreOpen = docSnap.data().isOpen;
+                    if (docSnap.data().closeReason) closeReason = docSnap.data().closeReason;
+                } else {
+                    isStoreOpen = true;
+                }
+
+                if (messageEl) messageEl.textContent = closeReason;
+                if (reasonInput && document.activeElement !== reasonInput) {
+                    reasonInput.value = docSnap.exists() && docSnap.data().closeReason ? docSnap.data().closeReason : "";
+                }
+
+                if (isStoreOpen) {
+                    overlay.classList.add('hidden');
+                } else {
+                    overlay.classList.remove('hidden');
+                }
+
+                if (toggle) toggle.checked = isStoreOpen;
+                if (statusText) {
+                    statusText.textContent = isStoreOpen ? "Buka" : "Tutup";
+                    statusText.className = isStoreOpen ? "text-sm text-green-600 font-bold" : "text-sm text-red-600 font-bold";
+                }
+            });
+        }
+
+        window.toggleStoreStatus = async function(isOpen) {
+            if (!isFirebaseReady || !currentUser) return;
+            const reason = document.getElementById('admin-close-reason').value || "Maaf ya kak, Mincus lagi istirahat atau kuota pesanan penuh hari ini. Kembali lagi besok ya! 💕";
+            try {
+                const statusRef = doc(db, 'artifacts', appId, 'public', 'data', 'settings', 'store_status');
+                await setDoc(statusRef, { isOpen: isOpen, closeReason: reason }, { merge: true });
+            } catch (err) {
+                console.error("Error toggling store status:", err);
+            }
+        }
+
+        window.saveCloseReason = async function() {
+            if (!isFirebaseReady || !currentUser) return;
+            const reason = document.getElementById('admin-close-reason').value || "Maaf ya kak, Mincus lagi istirahat atau kuota pesanan penuh hari ini. Kembali lagi besok ya! 💕";
+            const toggle = document.getElementById('toggle-store-status');
+            try {
+                const statusRef = doc(db, 'artifacts', appId, 'public', 'data', 'settings', 'store_status');
+                await setDoc(statusRef, { isOpen: toggle.checked, closeReason: reason }, { merge: true });
+                showModal("Keterangan berhasil disimpan! ✨", 'info');
+            } catch (err) {
+                console.error("Error saving reason:", err);
+            }
+        }
+
+        async function compressImageAndGetBase64(file, maxWidth = 800) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = (event) => {
+                    const img = new Image();
+                    img.src = event.target.result;
+                    img.onload = () => {
+                        const canvas = document.createElement('canvas');
+                        let width = img.width;
+                        let height = img.height;
+                        if (width > maxWidth) {
+                            height = Math.round((height * maxWidth) / width);
+                            width = maxWidth;
+                        }
+                        canvas.width = width;
+                        canvas.height = height;
+                        const ctx = canvas.getContext('2d');
+                        ctx.drawImage(img, 0, 0, width, height);
+                        resolve(canvas.toDataURL('image/jpeg', 0.7));
+                    };
+                    img.onerror = (err) => reject(err);
+                };
+                reader.onerror = (err) => reject(err);
+            });
+        }
+
+        function listenGallery() {
+            if (!isFirebaseReady) return;
+            const galleryRef = collection(db, 'artifacts', appId, 'public', 'data', 'gallery');
+            
+            onSnapshot(galleryRef, (snapshot) => {
+                let items = [];
+                snapshot.forEach(doc => items.push({ id: doc.id, ...doc.data() }));
+                items.sort((a, b) => b.createdAt - a.createdAt);
+                renderGalleryFrontend(items);
+                renderGalleryAdmin(items);
+            });
+        }
+
+        function renderGalleryFrontend(items) {
+            const grid = document.getElementById('gallery-grid');
+            if (!grid) return;
+            if (items.length === 0) {
+                grid.innerHTML = '<p class="text-sm text-gray-400 col-span-full text-center w-full mt-4">Belum ada foto karya yang diunggah Mincus. Tunggu ya! 💕</p>';
+                return;
+            }
+            let html = '';
+            items.forEach(item => {
+                html += `
+                    <div class="group relative rounded-xl overflow-hidden shadow-sm border-2 border-pink-100 hover:border-pink-400 transition-all duration-300">
+                        <img src="${escapeHTML(item.url)}" alt="${escapeHTML(item.title)}" class="w-full h-32 md:h-40 object-cover transform group-hover:scale-110 transition duration-500" onerror="this.src='https://placehold.co/400x400/ffe6f0/ff4d88?text=Image+Error'">
+                        <div class="absolute inset-0 bg-gradient-to-t from-pink-500/80 to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex items-end justify-center pb-2">
+                            <span class="text-white font-bold text-xs">${escapeHTML(item.title)}</span>
+                        </div>
+                    </div>
+                `;
+            });
+            grid.innerHTML = html;
+        }
+
+        function renderGalleryAdmin(items) {
+            const list = document.getElementById('admin-gallery-list');
+            if (!list) return;
+            if (items.length === 0) {
+                list.innerHTML = '<p class="text-sm text-gray-400 col-span-full text-center">Belum ada foto yang ditambahkan min.</p>';
+                return;
+            }
+            let html = '';
+            items.forEach(item => {
+                html += `
+                    <div class="relative group rounded-lg overflow-hidden border border-pink-200 aspect-square shadow-sm">
+                        <img src="${item.url}" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/400x400/ffe6f0/ff4d88?text=Error'">
+                        <button onclick="deleteGalleryImage('${item.id}', this)" class="absolute top-2 right-2 bg-red-500 text-white w-8 h-8 flex items-center justify-center text-sm rounded shadow-lg hover:bg-red-600 transition z-10 border border-red-700 cursor-pointer">
+                            <i class="fa-solid fa-trash"></i>
+                        </button>
+                    </div>
+                `;
+            });
+            list.innerHTML = html;
+        }
+
+        window.addGalleryImage = async function() {
+            if (!isFirebaseReady || !currentUser) return;
+            const fileInput = document.getElementById('admin-gal-file');
+            const titleInput = document.getElementById('admin-gal-title');
+            const btnAdd = document.getElementById('btn-add-gallery');
+            
+            if(!fileInput.files || fileInput.files.length === 0 || !titleInput.value) {
+                showModal("Kak, tolong pilih foto dari galeri dan isi Judul kuenya ya! 💕", 'error');
+                return;
+            }
+
+            const file = fileInput.files[0];
+            btnAdd.disabled = true;
+            btnAdd.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> Mengunggah...';
+
+            try {
+                const base64Image = await compressImageAndGetBase64(file);
+                const galleryRef = collection(db, 'artifacts', appId, 'public', 'data', 'gallery');
+                await addDoc(galleryRef, { url: base64Image, title: titleInput.value, createdAt: Date.now() });
+                fileInput.value = '';
+                titleInput.value = '';
+            } catch (err) {
+                console.error("Error adding image:", err);
+            } finally {
+                btnAdd.disabled = false;
+                btnAdd.innerHTML = '<i class="fa-solid fa-plus mr-2"></i> Tambah ke Galeri';
+            }
+        }
+
+        window.deleteGalleryImage = function(id, btnEl) {
+            if (!isFirebaseReady || !currentUser) return;
+            showModal("Yakin mau hapus foto ini dari galeri depan min? 🥺", 'confirm', async () => {
+                if (btnEl) {
+                    btnEl.disabled = true;
+                    btnEl.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i>';
+                }
+                try {
+                    await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'gallery', id));
+                    if(btnEl && btnEl.parentElement) btnEl.parentElement.remove();
+                } catch (err) {
+                    console.error("Error deleting image:", err);
+                }
+            });
+        }
+
+        // ==================== ORDER SUBMISSION ====================
+        const orderForm = document.getElementById('orderForm');
+        function showNotification(message, isError = false) {
+            const msgEl = document.getElementById('form-message');
+            msgEl.textContent = message;
+            msgEl.className = `p-3 rounded-lg text-center font-bold block mb-4 ${isError ? 'bg-red-100 text-red-600' : 'bg-green-100 text-green-600'}`;
+            msgEl.classList.remove('hidden');
+            setTimeout(() => { msgEl.classList.add('hidden'); }, 5000);
+        }
+
+        orderForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('btn-submit-order');
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> Memproses...';
+
+            const orderData = {
+                nama: document.getElementById('f_nama').value,
+                pesanan: document.getElementById('f_pesanan').value,
+                ukuran: document.getElementById('f_ukuran').value,
+                baseCake: document.getElementById('f_base').value,
+                warna: document.getElementById('f_warna').value,
+                detail: document.getElementById('f_detail').value,
+                tulisanKue: document.getElementById('f_tulisan_kue').value || "-",
+                tulisanPapan: document.getElementById('f_tulisan_papan').value || "-",
+                tanggal: document.getElementById('f_tanggal').value,
+                jam: document.getElementById('f_jam').value,
+                metode: document.getElementById('f_metode').value,
+                status: 'Menunggu Konfirmasi',
+                buktiTransaksi: '',
+                buktiPengambilan: '',
+                createdAt: new Date().toISOString()
+            };
+
+            try {
+                if (isFirebaseReady && currentUser) {
+                    const ordersRef = collection(db, 'artifacts', appId, 'public', 'data', 'orders');
+                    await addDoc(ordersRef, orderData);
+                }
+
+                const adminWa = "6281237363698"; 
+                let text = `*✨ NEW ORDER! Ncus Sweet Bake Bakery ✨*\n\n`;
+                text += `Halo mincus! Ada pesanan masuk nih, tolong dicek yaa 🙏🏻😊\n\n`;
+                text += `*Nama pemesan* : ${orderData.nama}\n`;
+                text += `*Pesanan* : ${orderData.pesanan}\n`;
+                text += `*Ukuran kue* : ${orderData.ukuran}\n`;
+                text += `*Base cake* : ${orderData.baseCake}\n`;
+                text += `*Warna kue* : ${orderData.warna}\n`;
+                text += `*Detail bentuk* : ${orderData.detail}\n`;
+                text += `*Tulisan kue* : ${orderData.tulisanKue}\n`;
+                text += `*Tulisan papan* : ${orderData.tulisanPapan}\n`;
+                text += `*Hari, tanggal* : ${orderData.tanggal}\n`;
+                text += `*Jam pengambilan* : ${orderData.jam}\n`;
+                text += `*Metode Pembayaran* : ${orderData.metode}\n\n`;
+                if(orderData.metode === "QRIS") text += `_(Kirimkan kode QRIS untuk pelanggan ini ya min!)_\n\n`;
+                text += `_Terima kasih! Ditunggu totalan dan konfirmasinya 💕_`;
+
+                const waUrl = `https://api.whatsapp.com/send?phone=${adminWa}&text=${encodeURIComponent(text)}`;
+                showNotification("Yeay! Pesanan berhasil dikirim ke WhatsApp Admin! 💕");
+                orderForm.reset();
+                window.open(waUrl, '_blank');
+            } catch (error) {
+                console.error(error);
+                showNotification("Oops! Terjadi kesalahan.", true);
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = '<i class="fa-brands fa-whatsapp mr-2"></i> Kirim Pesanan 💖';
+            }
+        });
+
+        // ==================== ADMIN LOGIN ====================
+        const loginForm = document.getElementById('loginForm');
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const pw = document.getElementById('admin_password').value;
+            const errorMsg = document.getElementById('login-error');
+            if(pw === 'admin123') {
+                sessionStorage.setItem('adminLoggedIn', 'true');
+                errorMsg.classList.add('hidden');
+                document.getElementById('admin_password').value = '';
+                switchView('admin-dashboard-view');
+            } else {
+                errorMsg.classList.remove('hidden');
+            }
+        });
+
+        window.logoutAdmin = function() {
+            sessionStorage.removeItem('adminLoggedIn');
+            switchView('order-view');
+        }
+
+        // ==================== ADMIN DASHBOARD & ORDERS ====================
+        let unsubOrders = null;
+        function loadOrders() {
+            if (!isFirebaseReady || !currentUser) return;
+            const ordersRef = collection(db, 'artifacts', appId, 'public', 'data', 'orders');
+            if (unsubOrders) unsubOrders();
+
+            unsubOrders = onSnapshot(ordersRef, (snapshot) => {
+                let orders = [];
+                snapshot.forEach(doc => orders.push({ id: doc.id, ...doc.data() }));
+                orders.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+                renderOrders(orders);
+            });
+        }
+
+        function renderOrders(orders) {
+            const activeContainer = document.getElementById('active-orders-container');
+            const historyContainer = document.getElementById('history-orders-container');
+            let activeHtml = '';
+            let historyHtml = '';
+
+            const activeOrders = orders.filter(o => o.status !== 'Selesai' && o.status !== 'Dibatalkan');
+            const historyOrders = orders.filter(o => o.status === 'Selesai' || o.status === 'Dibatalkan');
+
+            if (activeOrders.length === 0) {
+                activeHtml = `<div class="cute-card p-10 text-center"><div class="text-4xl mb-3">🍃</div><p class="text-pink-600 font-bold text-lg">Belum ada pesanan aktif min...</p></div>`;
+            } else {
+                activeOrders.forEach(order => {
+                    let statusColor = 'bg-yellow-100 text-yellow-700 border-yellow-300';
+                    if(order.status === 'Proses Baking') statusColor = 'bg-blue-100 text-blue-700 border-blue-300';
+                    if(order.status === 'Siap Diambil') statusColor = 'bg-green-100 text-green-700 border-green-300';
+
+                    activeHtml += `
+                        <div class="cute-card p-5 md:p-6 mb-4">
+                            <div class="flex flex-col md:flex-row justify-between items-start md:items-center border-b-2 border-pink-100 pb-4 mb-4">
+                                <div>
+                                    <h3 class="text-xl font-bold text-pink-600">Pesanan dari: ${escapeHTML(order.nama)}</h3>
+                                    <p class="text-sm text-gray-500">Dibuat: ${new Date(order.createdAt).toLocaleString('id-ID')}</p>
+                                </div>
+                                <div class="mt-3 md:mt-0 px-3 py-1 rounded-full border ${statusColor} text-sm font-bold">${order.status}</div>
+                            </div>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-5 text-sm">
+                                <div><span class="font-bold">Cake:</span> ${escapeHTML(order.pesanan)}</div>
+                                <div><span class="font-bold">Ukuran/Base:</span> ${escapeHTML(order.ukuran)} - ${escapeHTML(order.baseCake)}</div>
+                                <div><span class="font-bold">Warna/Detail:</span> ${escapeHTML(order.warna)} | ${escapeHTML(order.detail)}</div>
+                                <div><span class="font-bold">Tulisan:</span> Kue: ${escapeHTML(order.tulisanKue)} | Papan: ${escapeHTML(order.tulisanPapan)}</div>
+                                <div><span class="font-bold">Waktu Ambil:</span> ${escapeHTML(order.tanggal)} jam ${escapeHTML(order.jam)}</div>
+                                <div><span class="font-bold">Pembayaran:</span> <span class="${order.metode === 'QRIS' ? 'text-blue-600' : 'text-green-600'} font-bold">${escapeHTML(order.metode)}</span></div>
+                            </div>
+                            <div class="bg-pink-50 p-4 rounded-xl border border-pink-200">
+                                <h4 class="font-bold text-pink-600 mb-3"><i class="fa-solid fa-gear mr-1"></i> Aksi Admin</h4>
+                                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                    <div>
+                                        <label class="block text-xs font-bold text-pink-500 mb-1">Upload Bukti Bayar</label>
+                                        ${order.metode === 'Cash' ? 
+                                            `<div class="text-sm text-green-600 font-bold mt-2"><i class="fa-solid fa-money-bill-wave"></i> Tunai (Di tempat)</div>` 
+                                            : 
+                                            `<div class="flex gap-1 flex-col">
+                                                <input type="file" id="tf_${order.id}" accept="image/*" class="w-full text-xs text-gray-500 file:mr-2 file:py-1 file:px-2 file:rounded file:border-0 file:text-xs file:font-bold file:bg-white file:text-pink-600 cursor-pointer border border-pink-200 rounded p-1">
+                                                <button onclick="updateImageFile('${order.id}', 'buktiTransaksi', 'tf_${order.id}')" class="bg-pink-400 hover:bg-pink-500 text-white py-1 px-2 rounded-lg text-xs transition font-bold"><i class="fa-solid fa-upload mr-1"></i> Simpan Foto</button>
+                                            </div>
+                                            ${order.buktiTransaksi ? `<a href="${order.buktiTransaksi}" target="_blank" class="text-xs text-blue-500 hover:underline mt-2 inline-block"><i class="fa-solid fa-image"></i> Lihat Gambar QRIS</a>` : ''}`
+                                        }
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs font-bold text-pink-500 mb-1">Upload Bukti Ambil</label>
+                                        <div class="flex gap-1 flex-col">
+                                            <input type="file" id="ambil_${order.id}" accept="image/*" class="w-full text-xs text-gray-500 file:mr-2 file:py-1 file:px-2 file:rounded file:border-0 file:text-xs file:font-bold file:bg-white file:text-pink-600 cursor-pointer border border-pink-200 rounded p-1">
+                                            <button onclick="updateImageFile('${order.id}', 'buktiPengambilan', 'ambil_${order.id}')" class="bg-pink-400 hover:bg-pink-500 text-white py-1 px-2 rounded-lg text-xs transition font-bold"><i class="fa-solid fa-upload mr-1"></i> Simpan Foto</button>
+                                        </div>
+                                        ${order.buktiPengambilan ? `<a href="${order.buktiPengambilan}" target="_blank" class="text-xs text-blue-500 hover:underline mt-2 inline-block"><i class="fa-solid fa-image"></i> Lihat Gambar</a>` : ''}
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs font-bold text-pink-500 mb-1">Ubah Status Pesanan</label>
+                                        <div class="flex flex-wrap gap-2 mt-1">
+                                            <button onclick="updateOrderStatus('${order.id}', 'Proses Baking')" class="text-xs bg-blue-100 hover:bg-blue-200 text-blue-700 px-2 py-1 rounded border border-blue-300 transition">Baking</button>
+                                            <button onclick="updateOrderStatus('${order.id}', 'Siap Diambil')" class="text-xs bg-green-100 hover:bg-green-200 text-green-700 px-2 py-1 rounded border border-green-300 transition">Siap</button>
+                                            <button onclick="updateOrderStatus('${order.id}', 'Selesai')" class="text-xs bg-pink-500 hover:bg-pink-600 text-white px-3 py-1 rounded shadow transition">Selesai</button>
+                                            <button onclick="updateOrderStatus('${order.id}', 'Dibatalkan')" class="text-xs bg-red-100 hover:bg-red-200 text-red-700 px-2 py-1 rounded border border-red-300 transition">Batal</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                });
+            }
+            activeContainer.innerHTML = activeHtml;
+
+            if (historyOrders.length === 0) {
+                historyHtml = `<div class="cute-card p-10 text-center"><p class="text-pink-600 font-bold text-lg">Belum ada riwayat selesai.</p></div>`;
+            } else {
+                historyOrders.forEach(order => {
+                    let statusColor = order.status === 'Selesai' ? 'bg-pink-100 text-pink-700 border-pink-300' : 'bg-red-100 text-red-700 border-red-300';
+                    historyHtml += `
+                        <div class="cute-card p-5 border-l-4 ${order.status === 'Selesai' ? 'border-l-pink-500' : 'border-l-red-500'} mb-4 bg-white/70">
+                            <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-3">
+                                <h3 class="text-lg font-bold text-gray-700">${escapeHTML(order.nama)} - ${escapeHTML(order.pesanan)}</h3>
+                                <div class="px-3 py-1 rounded-full border ${statusColor} text-xs font-bold mt-2 md:mt-0">${order.status}</div>
+                            </div>
+                            <p class="text-xs text-gray-500 mb-3">Tgl Ambil: ${escapeHTML(order.tanggal)} jam ${escapeHTML(order.jam)}</p>
+                            
+                            <div class="bg-gray-50 p-4 rounded-xl border border-gray-200 grid grid-cols-1 md:grid-cols-2 gap-6 text-sm mt-4">
+                                <div>
+                                    <span class="block text-xs font-bold text-pink-500 mb-2 border-b border-pink-100 pb-1">Status Pembayaran</span>
+                                    ${order.metode === 'Cash' 
+                                        ? `<span class="text-green-600 font-bold flex items-center"><i class="fa-solid fa-money-bill-wave mr-2 text-lg"></i> Pembayaran Lunas (Cash)</span>` 
+                                        : (order.buktiTransaksi 
+                                            ? `<div class="mt-2 relative group rounded-lg overflow-hidden border border-pink-200 w-32 h-32 bg-white flex items-center justify-center">
+                                                 <img src="${order.buktiTransaksi}" class="w-full h-full object-cover">
+                                                 <a href="${order.buktiTransaksi}" target="_blank" class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center text-white text-xs font-bold">Lihat Penuh</a>
+                                               </div>` 
+                                            : `<span class="text-red-400 font-bold bg-red-50 px-2 py-1 rounded">Belum Ada Bukti QRIS</span>`)
+                                    }
+                                </div>
+                                <div>
+                                    <span class="block text-xs font-bold text-pink-500 mb-2 border-b border-pink-100 pb-1">Bukti Barang Diterima</span>
+                                    ${order.status === 'Selesai' && order.buktiPengambilan 
+                                        ? `<div class="mt-2 relative group rounded-lg overflow-hidden border border-pink-200 w-32 h-32 bg-white flex items-center justify-center">
+                                             <img src="${order.buktiPengambilan}" class="w-full h-full object-cover">
+                                             <a href="${order.buktiPengambilan}" target="_blank" class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition flex items-center justify-center text-white text-xs font-bold">Lihat Penuh</a>
+                                           </div>` 
+                                        : (order.status === 'Selesai' ? `<span class="text-blue-600 font-bold bg-blue-50 px-2 py-1 rounded"><i class="fa-solid fa-check mr-1"></i> Diserahkan (Tanpa Foto)</span>` : `<span class="text-red-500 font-bold bg-red-50 px-2 py-1 rounded">Pesanan Dibatalkan</span>`)}
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                });
+            }
+            historyContainer.innerHTML = historyHtml;
+        }
+
+        // ==================== TRACKING SYSTEM ====================
+        window.searchOrder = async function() {
+            const nameInput = document.getElementById('track_name').value.trim().toLowerCase();
+            const resultsContainer = document.getElementById('track-results');
+            if(!nameInput) return;
+
+            resultsContainer.innerHTML = '<div class="text-center py-10"><i class="fa-solid fa-spinner fa-spin text-pink-500 text-4xl mb-3"></i><p class="text-pink-600 font-bold">Mencari data pesananmu...</p></div>';
+
+            if (!isFirebaseReady || !currentUser) return;
+
+            try {
+                const ordersRef = collection(db, 'artifacts', appId, 'public', 'data', 'orders');
+                const qSnap = await getDocs(ordersRef);
+                let foundOrders = [];
+                qSnap.forEach(doc => {
+                    const data = doc.data();
+                    if(data.nama && data.nama.toLowerCase().includes(nameInput)) {
+                        foundOrders.push({id: doc.id, ...data});
+                    }
+                });
+
+                if(foundOrders.length === 0) {
+                    resultsContainer.innerHTML = `
+                        <div class="bg-pink-50 border border-pink-200 rounded-xl p-8 text-center">
+                            <div class="text-4xl mb-3">🥺</div>
+                            <p class="text-pink-600 font-bold text-lg mb-2">Pesanan tidak ditemukan!</p>
+                            <p class="text-sm text-pink-500">Pastikan kamu mengetik nama pemesan dengan benar.</p>
+                        </div>`;
+                    return;
+                }
+                
+                foundOrders.sort((a,b) => new Date(b.createdAt) - new Date(a.createdAt));
+                let html = '';
+                const stepDefinitions = ['Menunggu Konfirmasi', 'Proses Baking', 'Siap Diambil', 'Selesai'];
+
+                foundOrders.forEach(order => {
+                    let currentStepIndex = stepDefinitions.indexOf(order.status);
+                    const isCanceled = order.status === 'Dibatalkan';
+                    if(isCanceled) currentStepIndex = -1;
+
+                    let timelineHtml = `<div class="relative flex justify-between mt-8 mb-4 max-w-md mx-auto">`;
+                    timelineHtml += `<div class="absolute top-1/2 left-0 w-full h-1 bg-pink-100 -z-10 transform -translate-y-1/2 rounded-full"></div>`;
+                    if(!isCanceled && currentStepIndex >= 0) {
+                        let progressWidth = (currentStepIndex / (stepDefinitions.length - 1)) * 100;
+                        timelineHtml += `<div class="absolute top-1/2 left-0 h-1 bg-pink-500 -z-10 transform -translate-y-1/2 transition-all duration-1000 rounded-full" style="width: ${progressWidth}%"></div>`;
+                    }
+
+                    stepDefinitions.forEach((step, idx) => {
+                        let isActive = !isCanceled && idx <= currentStepIndex;
+                        let isCurrent = !isCanceled && idx === currentStepIndex;
+                        let icon = idx === 0 ? 'fa-clipboard-list' : idx === 1 ? 'fa-bowl-food' : idx === 2 ? 'fa-bag-shopping' : 'fa-check-double';
+                        let bgColor = isActive ? 'bg-pink-500 text-white border-pink-500' : 'bg-white text-pink-300 border-pink-200';
+                        if(isCanceled) bgColor = 'bg-gray-200 text-gray-400 border-gray-300';
+
+                        timelineHtml += `
+                            <div class="flex flex-col items-center relative z-10">
+                                <div class="w-10 h-10 rounded-full border-4 flex items-center justify-center transition-all duration-300 ${bgColor} ${isCurrent ? 'scale-110 shadow-[0_0_15px_rgba(255,77,136,0.6)]' : ''}">
+                                    <i class="fa-solid ${icon} text-sm"></i>
+                                </div>
+                                <span class="absolute top-12 text-[10px] sm:text-xs font-bold w-20 text-center ${isActive ? 'text-pink-600' : 'text-gray-400'}">${step}</span>
+                            </div>
+                        `;
+                    });
+                    timelineHtml += `</div><div class="h-8"></div>`;
+
+                    html += `
+                        <div class="cute-card p-6 md:p-8 bg-white mb-6">
+                            <div class="flex flex-col md:flex-row justify-between border-b-2 border-pink-100 pb-4 mb-4">
+                                <div>
+                                    <h3 class="font-cute text-pink-500 text-2xl mb-1">${escapeHTML(order.pesanan)}</h3>
+                                    <p class="text-sm text-gray-500"><i class="fa-regular fa-clock mr-1"></i> Tgl Ambil: <span class="font-bold text-gray-700">${escapeHTML(order.tanggal)} jam ${escapeHTML(order.jam)}</span></p>
+                                </div>
+                                ${isCanceled ? `<div class="mt-3 md:mt-0 px-4 py-2 bg-red-100 text-red-600 font-bold rounded-xl border border-red-200 flex items-center h-fit"><i class="fa-solid fa-ban mr-2"></i> Dibatalkan</div>` : ''}
+                            </div>
+                            ${isCanceled ? '' : timelineHtml}
+                            <div class="bg-pink-50 p-4 rounded-xl border border-pink-200 mt-6 flex flex-col md:flex-row gap-4 justify-between items-center">
+                                <div>
+                                    <p class="text-sm text-pink-600 font-bold mb-1">Aktivitas Admin saat ini:</p>
+                                    <p class="text-pink-800 text-lg font-bold">${isCanceled ? 'Pesanan Dibatalkan 🥺' : stepDefinitions[currentStepIndex] + ' ✨'}</p>
+                                </div>
+                                ${order.status === 'Selesai' && order.buktiPengambilan ? `
+                                    <div class="bg-white p-2 rounded-lg border border-pink-200 shadow-sm flex items-center gap-3">
+                                        <div class="text-left">
+                                            <p class="text-xs font-bold text-pink-500">Bukti Diterima:</p>
+                                            <a href="${order.buktiPengambilan}" target="_blank" class="text-xs text-blue-500 hover:underline">Lihat Foto Lengkap &rarr;</a>
+                                        </div>
+                                        <img src="${order.buktiPengambilan}" class="w-16 h-16 object-cover rounded border border-pink-100">
+                                    </div>
+                                ` : ''}
+                            </div>
+                        </div>
+                    `;
+                });
+                resultsContainer.innerHTML = html;
+            } catch (err) {
+                console.error(err);
+            }
+        }
+
+        // ==================== REVIEWS ====================
+        let currentStarRating = 5;
+        window.setRating = function(stars) {
+            currentStarRating = stars;
+            for(let i=1; i<=5; i++) {
+                const starEl = document.getElementById(`star-${i}`);
+                if(i <= stars) starEl.classList.replace('text-gray-300', 'text-yellow-400');
+                else starEl.classList.replace('text-yellow-400', 'text-gray-300');
+            }
+        }
+
+        window.submitReview = async function() {
+            if (!isFirebaseReady || !currentUser) return;
+            const nama = document.getElementById('rev_nama').value;
+            const pesan = document.getElementById('rev_pesan').value;
+            if(!nama || !pesan) {
+                showModal("Isi nama dan ulasan dulu ya kak! 💕", 'error');
+                return;
+            }
+            try {
+                const reviewsRef = collection(db, 'artifacts', appId, 'public', 'data', 'reviews');
+                await addDoc(reviewsRef, { nama, pesan, rating: currentStarRating, createdAt: Date.now() });
+                document.getElementById('rev_nama').value = '';
+                document.getElementById('rev_pesan').value = '';
+                setRating(5);
+                showModal("Terima kasih ulasannya kak! 💖", 'info');
+            } catch(e) { console.error(e); }
+        }
+
+        function listenReviews() {
+            if (!isFirebaseReady) return;
+            const reviewsRef = collection(db, 'artifacts', appId, 'public', 'data', 'reviews');
+            onSnapshot(reviewsRef, (snapshot) => {
+                let items = [];
+                snapshot.forEach(doc => items.push({ id: doc.id, ...doc.data() }));
+                items.sort((a, b) => b.createdAt - a.createdAt);
+                renderReviewsFrontend(items);
+                renderReviewsAdmin(items);
+            });
+        }
+
+        function renderReviewsFrontend(items) {
+            const container = document.getElementById('reviews-display');
+            if(!container) return;
+            if(items.length === 0) {
+                container.innerHTML = '<p class="text-sm text-gray-400 text-center w-full">Belum ada ulasan, yuk jadi yang pertama! ✨</p>';
+                return;
+            }
+            let html = '';
+            items.forEach(item => {
+                const starsHtml = '<i class="fa-solid fa-star"></i>'.repeat(item.rating) + '<i class="fa-solid fa-star text-gray-300"></i>'.repeat(5 - item.rating);
+                html += `
+                    <div class="snap-center shrink-0 w-64 bg-white p-4 rounded-xl shadow-sm border border-pink-100 flex flex-col justify-between">
+                        <div>
+                            <div class="flex gap-1 text-yellow-400 text-sm mb-2">${starsHtml}</div>
+                            <p class="text-sm text-gray-700 italic mb-2">"${escapeHTML(item.pesan)}"</p>
+                        </div>
+                        <p class="text-xs font-bold text-pink-500 text-right mt-2">- ${escapeHTML(item.nama)}</p>
+                    </div>
+                `;
+            });
+            container.innerHTML = html;
+        }
+
+        function renderReviewsAdmin(items) {
+            const container = document.getElementById('admin-reviews-container');
+            if(!container) return;
+            if(items.length === 0) {
+                container.innerHTML = '<p class="text-sm text-gray-400 text-center">Belum ada ulasan.</p>';
+                return;
+            }
+            let html = '';
+            items.forEach(item => {
+                const starsHtml = '<i class="fa-solid fa-star"></i>'.repeat(item.rating) + '<i class="fa-solid fa-star text-gray-300"></i>'.repeat(5 - item.rating);
+                html += `
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center bg-gray-50 p-3 rounded-lg border border-gray-200">
+                        <div class="mb-2 sm:mb-0">
+                            <div class="flex gap-1 text-yellow-400 text-xs mb-1">${starsHtml}</div>
+                            <p class="text-sm font-bold text-gray-700">${escapeHTML(item.nama)}</p>
+                            <p class="text-xs text-gray-500 italic">"${escapeHTML(item.pesan)}"</p>
+                        </div>
+                        <button onclick="deleteReview('${item.id}')" class="bg-red-100 hover:bg-red-200 text-red-600 px-3 py-1 rounded text-xs font-bold transition flex items-center">
+                            <i class="fa-solid fa-trash mr-1"></i> Hapus
+                        </button>
+                    </div>
+                `;
+            });
+            container.innerHTML = html;
+        }
+
+        window.deleteReview = function(id) {
+            if (!isFirebaseReady || !currentUser) return;
+            showModal("Yakin mau hapus ulasan ini min?", 'confirm', async () => {
+                await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'reviews', id));
+            });
+        }
+
+        window.updateOrderStatus = async function(orderId, newStatus) {
+            if (!isFirebaseReady || !currentUser) return;
+            const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'orders', orderId);
+            await updateDoc(docRef, { status: newStatus });
+        }
+
+        window.updateImageFile = async function(orderId, field, inputId) {
+            if (!isFirebaseReady || !currentUser) return;
+            const fileInput = document.getElementById(inputId);
+            if (!fileInput.files || fileInput.files.length === 0) return;
+
+            const file = fileInput.files[0];
+            const btn = fileInput.nextElementSibling;
+            const oldHtml = btn.innerHTML;
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Loading...';
+            btn.disabled = true;
+
+            try {
+                const base64Image = await compressImageAndGetBase64(file);
+                const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'orders', orderId);
+                const updateData = {};
+                updateData[field] = base64Image;
+                await updateDoc(docRef, updateData);
+                
+                btn.innerHTML = '<i class="fa-solid fa-check"></i> Tersimpan';
+                setTimeout(() => {
+                    btn.innerHTML = oldHtml;
+                    btn.disabled = false;
+                    fileInput.value = '';
+                }, 2000);
+            } catch (err) {
+                console.error(err);
+                btn.innerHTML = oldHtml;
+                btn.disabled = false;
+            }
+        }
+
+        function escapeHTML(str) {
+            if (!str) return '';
+            return str.replace(/[&<>'"]/g, 
+                tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag])
+            );
+        }
+
+        async function fetchGeminiWithRetry(url, options, retries = 3, delay = 1000) {
+            try {
+                const res = await fetch(url, options);
+                if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+                return await res.json();
+            } catch (error) {
+                if (retries > 0) {
+                    await new Promise(r => setTimeout(r, delay));
+                    return fetchGeminiWithRetry(url, options, retries - 1, delay * 2);
+                }
+                throw error;
+            }
+        }
+
+        window.generateIdea = async function() {
+            const promptInput = document.getElementById('ai_prompt');
+            const btn = document.getElementById('btn_ai_magic');
+            const loading = document.getElementById('ai_loading');
+            
+            if (!promptInput.value.trim()) {
+                showNotification("Tulis dulu untuk siapa ucapan kuenya ya kak! 🥺", true);
+                return;
+            }
+
+            btn.disabled = true;
+            promptInput.disabled = true;
+            loading.classList.remove('hidden');
+            loading.classList.add('flex');
+
+            try {
+                const apiKey = "";
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`;
+                
+                const payload = {
+                    contents: [{ parts: [{ text: `Tolong buatkan ucapan untuk ditulis di atas kue dan di papan kue untuk konteks acara/orang berikut: "${promptInput.value}".` }] }],
+                    systemInstruction: {
+                        parts: [{ text: "Kamu adalah 'Mincus AI', asisten di 'Ncus Sweet Bake Bakery'. Tugasmu HANYA membuatkan kata-kata ucapan romantis, lucu, atau manis yang akan ditulis di kue pelanggan. Hasilkan JSON dengan format yang diminta. 'tulisanKue' harus sangat singkat (maksimal 3-5 kata). 'tulisanPapan' maksimal 1-2 kalimat pendek." }]
+                    },
+                    generationConfig: {
+                        responseMimeType: "application/json",
+                        responseSchema: {
+                            type: "OBJECT",
+                            properties: {
+                                tulisanKue: { type: "STRING" },
+                                tulisanPapan: { type: "STRING" }
+                            }
+                        }
+                    }
+                };
+
+                const result = await fetchGeminiWithRetry(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (result.candidates && result.candidates[0]?.content?.parts?.[0]?.text) {
+                    const aiResponse = JSON.parse(result.candidates[0].content.parts[0].text);
+                    if(aiResponse.tulisanKue) document.getElementById('f_tulisan_kue').value = aiResponse.tulisanKue;
+                    if(aiResponse.tulisanPapan) document.getElementById('f_tulisan_papan').value = aiResponse.tulisanPapan;
+                    showNotification("Ta-da! ✨ Mincus AI udah bantu bikinin ucapan manisnya. 💖");
+                }
+            } catch (error) {
+                console.error("AI Error:", error);
+                showNotification("Maaf, Mincus AI lagi pusing. Coba lagi ya kak! 🥺", true);
+            } finally {
+                btn.disabled = false;
+                promptInput.disabled = false;
+                loading.classList.remove('flex');
+                loading.classList.add('hidden');
+            }
+        };
+    </script>
+</body>
+</html>
